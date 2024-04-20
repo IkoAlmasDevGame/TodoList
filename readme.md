@@ -1,3 +1,3 @@
-# app-package
+# To Do List
 
-Ini adalah sebuah file package untuk pembuatan website php native secara simple
+Aplikasi simple buatan saya
