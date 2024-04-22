@@ -23,11 +23,14 @@ class AuthLogin {
             $response = array($userEmail,$password);
             $respond["tb_users"] = $response;
             if($db = $row->fetch()){
+                if($db["user_level"] == "Pengguna"){
                 $_SESSION["id_pengguna"] = $db["id"];
                 $_SESSION["email_pengguna"] = $db["email"];
                 $_SESSION["username"] = $db["username"];
                 $_SESSION["nama_pengguna"] = $db["nama"];
+                $_SESSION["user_level"] = "Pengguna";
                 header("location:view/ui/header.php?page=beranda&nama=".$_SESSION["nama_pengguna"]);
+                }
             }
             $_SESSION["status"] = true;
             array_push($respond["tb_users"], $db);
@@ -44,17 +47,18 @@ class AuthLogin {
         }
     }
     
-    public function RegisterAuth($email,$username,$password,$nama){
+    public function RegisterAuth($email,$username,$password,$nama,$user_level){
         $email = htmlspecialchars($_POST["email"]) ? htmlentities($_POST["email"]) : strip_tags($_POST["email"]);
         $username = htmlspecialchars($_POST["username"]) ? htmlentities($_POST["username"]) : strip_tags($_POST["username"]);
         $password = htmlspecialchars($_POST["password"]) ? htmlentities($_POST["password"]) : strip_tags($_POST["password"]);
         $nama = htmlspecialchars($_POST["nama"]) ? htmlentities($_POST["nama"]) : strip_tags($_POST["nama"]);
+        $user_level = "Pengguna";
         password_verify($password, PASSWORD_DEFAULT);
 
         $table = "tb_users";
-        $sql = "INSERT INTO $table (email,username,password,nama) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO $table (email,username,password,nama,user_level) VALUES (?,?,?,?,?)";
         $row = $this->db->prepare($sql);
-        if($row->execute(array($email,$username,$password,$nama)) === true){
+        if($row->execute(array($email,$username,$password,$nama,$user_level)) === true){
             $_SESSION["status"] = true;
             echo "<script>
             alert('berhasil dibuat akun baru');
@@ -94,12 +98,13 @@ class ModelToDoList {
         $nama = htmlspecialchars($_POST["nama"]) ? htmlentities($_POST["nama"]) : strip_tags($_POST["nama"]);
         $jenis = htmlspecialchars($_POST["jenis_kegiatan"]) ? htmlentities($_POST["jenis_kegiatan"]) : strip_tags($_POST["jenis_kegiatan"]);
         $kegiatan = htmlspecialchars($_POST["nama_kegiatan"]) ? htmlentities($_POST["nama_kegiatan"]) : strip_tags($_POST["nama_kegiatan"]);
+        $realtime = date('d-m-Y H:i:s a');
         
         $table = "listtodo";
-        $sql = "INSERT INTO $table (nama,jenis_kegiatan,nama_kegiatan) VALUES (?,?,?)";
+        $sql = "INSERT INTO $table (nama,jenis_kegiatan,nama_kegiatan,realtime_create) VALUES (?,?,?,?)";
         $row = $this->db->prepare($sql);
 
-        if($row->execute(array($nama,$jenis,$kegiatan)) === true){
+        if($row->execute(array($nama,$jenis,$kegiatan,$realtime)) === true){
             echo "<script>alert('anda berhasil membuat to do list anda'); document.location.href='../ui/header.php?page=beranda&nama=$_SESSION[nama_pengguna]'</script>";
             exit();
             return true;

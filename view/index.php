@@ -23,7 +23,7 @@ if($_SESSION["status"] == ""){
                         $hasil = $controller->Tables("SELECT * FROM listtodo WHERE id_todolist = '$id'");
                         foreach ($hasil as $i) {
             ?>
-            <div class="card" style="max-height: 560px; width:420px;">
+            <div class="card" style="max-height: 768px; width:420px;">
                 <div class="card-header">
                     <h4 class="card-title display-4 fs-5 fw-normal">To Do List Hari Ini</h4>
                 </div>
@@ -100,7 +100,7 @@ if($_SESSION["status"] == ""){
             <?php
                 }
             ?>
-            <div class="card" style="max-width: 720px; width:720px;">
+            <div class="card" style="max-width: 768px; width:768px;">
                 <div class="card-header d-flex justify-content-between align-items-start flex-wrap">
                     <div class="card-header-form">
                         <h4 class="card-title display-4 fs-5 fw-normal">To Do List
@@ -128,6 +128,7 @@ if($_SESSION["status"] == ""){
                                     <th class="fw-normal fst-normal">No</th>
                                     <th class="fw-normal fst-normal">Jenis Kegiatan</th>
                                     <th class="fw-normal fst-normal">Nama Kegiatan</th>
+                                    <th class="fw-normal fst-normal">Tanggal Dibuat</th>
                                     <th class="fw-normal fst-normal">Aksi</th>
                                 </tr>
                             </thead>
@@ -141,6 +142,7 @@ if($_SESSION["status"] == ""){
                                     <td><?php echo $no; ?></td>
                                     <td><?php echo $isi["jenis_kegiatan"]; ?></td>
                                     <td><?php echo $isi["nama_kegiatan"]; ?></td>
+                                    <td><?php echo $isi["realtime_create"]; ?></td>
                                     <td>
                                         <a href="?page=beranda&nama=<?=$_SESSION["nama_pengguna"]?>&edit=yes&id=<?=$isi["id_todolist"]?>"
                                             aria-current="page" class="btn btn-warning">

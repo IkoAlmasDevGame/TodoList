@@ -21,7 +21,8 @@ class Authentication {
         $username = htmlspecialchars($_POST["username"]) ? htmlentities($_POST["username"]) : strip_tags($_POST["username"]);
         $password = htmlspecialchars($_POST["password"]) ? htmlentities($_POST["password"]) : strip_tags($_POST["password"]);
         $nama = htmlspecialchars($_POST["nama"]) ? htmlentities($_POST["nama"]) : strip_tags($_POST["nama"]);
-        $this->konfig->RegisterAuth($email,$username,$password,$nama);
+        $user_level = "Pengguna";
+        $this->konfig->RegisterAuth($email,$username,$password,$nama,$user_level);
     }
 }
 
